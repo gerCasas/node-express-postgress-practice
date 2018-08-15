@@ -1,63 +1,63 @@
-const User = require('../models').User;
+const UserModel = require('../models').UserModel;
 
 module.exports = {
   create(req, res) {
-    return User
+    return UserModel
       .create({
         name: req.body.name,
       })
-      .then(user => res.status(201).send(user))
+      .then(usermodel => res.status(201).send(usermodel))
       .catch(error => res.status(400).send(error));
   },
   list(req, res) {
-    return User
+    return UserModel
       .all()
-      .then(users => res.status(200).send(users))
+      .then(usermodels => res.status(200).send(usermodels))
       .catch(error => res.status(400).send(error));
   },
   retrieve(req, res) {
-    return User
-      .findById(req.params.todoId)
-      .then(user => {
-        if (!user) {
+    return UserModel
+      .findById(req.params.userId)
+      .then(usermodel => {
+        if (!usermodel) {
           return res.status(404).send({
-            message: 'User Not Found',
+            message: 'UserModel Not Found',
           });
         }
-        return res.status(200).send(user);
+        return res.status(200).send(usermodel);
       })
       .catch(error => res.status(400).send(error));
   },
   update(req, res) {
-    return User
+    return UserModel
       .findById(req.params.userId)
-      .then(user => {
-        if (!user) {
+      .then(usermodel => {
+        if (!usermodel) {
           return res.status(404).send({
-            message: 'User Not Found',
+            message: 'UserModel Not Found',
           });
         }
-        return user
+        return usermodel
           .update({
-            name: req.body.name || user.name,
+            name: req.body.name || usermodel.name,
           })
-          .then(() => res.status(200).send(user))  // Send back the updated user.
+          .then(() => res.status(200).send(usermodel))  // Send back the updated usermodel.
           .catch((error) => res.status(400).send(error));
       })
       .catch((error) => res.status(400).send(error));
   },
   destroy(req, res) {
-    return User
+    return UserModel
       .findById(req.params.userId)
-      .then(user => {
-        if (!user) {
+      .then(usermodel => {
+        if (!usermodel) {
           return res.status(400).send({
-            message: 'User Not Found',
+            message: 'UserModel Not Found',
           });
         }
-        return user
+        return usermodel
          .destroy()
-         .then(() => res.status(200).send({ message: 'User deleted successfully.' }))
+         .then(() => res.status(200).send({ message: 'UserModel deleted successfully.' }))
          .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(400).send(error));
